@@ -10,10 +10,22 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@react-native-community/geolocation": "^2.0.2",
+    "@react-native-community/masked-view": "^0.1.7",
+    "@react-navigation/bottom-tabs": "^5.1.1",
+    "@react-navigation/native": "^5.0.9",
     "add": "2.0.6",
     "react": "16.9.0",
     "react-native": "0.61.5",
+    "react-native-gesture-handler": "^1.6.0",
     "react-native-maps": "0.26.1",
+    "react-native-reanimated": "^1.7.0",
+    "react-native-safe-area-context": "^0.7.3",
+    "react-native-screens": "^2.2.0",
+    "react-redux": "^7.2.0",
+    "redux": "^4.0.5",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0",
     "yarn": "1.22.0"
   },
   "devDependencies": {

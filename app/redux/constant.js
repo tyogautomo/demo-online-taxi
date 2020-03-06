@@ -1,0 +1,1 @@
+export const REQUEST_LOCATION = 'REQUEST_LOCATION'
