@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import IconAwesome from 'react-native-vector-icons/FontAwesome';
 
-import { Home } from '../screenConfig';
+import { Home, ChooseDestination, ChooseOrigin } from '../screenConfig';
 
 const BottomTab = createBottomTabNavigator();
 
@@ -14,7 +15,7 @@ const MainBottomTabNavigator = () => {
         component={Home}
         options={{
           tabBarIcon: () => (
-            <View style={{ width: 80, height: 80, backgroundColor: '#8de08b', borderRadius: 40, elevation: 2, marginBottom: 40 }}>
+            <View style={{ width: 80, height: 80, backgroundColor: '#039A34', borderRadius: 40, elevation: 2, marginBottom: 40 }}>
 
             </View>
           ),
