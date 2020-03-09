@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component, useCallback } from 'react';
 import { View, Text, ScrollView, Animated } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 
 class Home extends Component {
   offset = 0;
@@ -10,6 +11,20 @@ class Home extends Component {
 
   componentDidMount() {
     this.setInitialParam();
+    this.onFocus();
+  }
+
+  onFocus = () => {
+    const { navigation } = this.props;
+    navigation.addListener('focus', () => {
+      Animated.timing(
+        this.state.animatedBottom,
+        {
+          toValue: 0,
+          duration: 200
+        }
+      ).start();
+    })
   }
 
   onScroll = (e) => {
