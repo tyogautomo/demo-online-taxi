@@ -1,27 +1,53 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, Animated } from 'react-native';
 
 class Home extends Component {
   offset = 0;
+  state = {
+    animatedBottom: new Animated.Value(0),
+    scrolledToTop: false
+  }
+
   componentDidMount() {
     this.setInitialParam();
   }
 
   onScroll = (e) => {
-    const { navigation } = this.props;
     const currentOffsetY = e.nativeEvent.contentOffset.y;
-    if (currentOffsetY > this.offset) {
-      navigation.setParams({ isTabVisible: false })
-    }
-    if (currentOffsetY < this.offset) {
-      navigation.setParams({ isTabVisible: true })
+    const velocity = e.nativeEvent.velocity.y
+    if ((currentOffsetY > this.offset) && velocity > 0.4) {
+      if (this.state.scrolledToTop === false) {
+        this.setState({ scrolledToTop: true }, () => {
+          Animated.timing(
+            this.state.animatedBottom,
+            {
+              toValue: -100,
+              duration: 200
+            }
+          ).start();
+        })
+      }
+    } else if ((currentOffsetY < this.offset) && velocity > -0.4) {
+      if (this.state.scrolledToTop === true) {
+        this.setState({ scrolledToTop: false }, () => {
+          Animated.timing(
+            this.state.animatedBottom,
+            {
+              toValue: 0,
+              duration: 200
+            }
+          ).start();
+        })
+      }
     }
     this.offset = currentOffsetY;
   }
 
   setInitialParam = () => {
     const { navigation } = this.props;
-    navigation.setParams({ isTabVisible: true })
+    navigation.setParams({
+      bottom: this.state.animatedBottom
+    })
   };
 
   render() {
