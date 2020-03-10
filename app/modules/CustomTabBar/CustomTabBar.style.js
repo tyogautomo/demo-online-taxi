@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   rideIcon: {
     width: 80,
     height: 80,
-    backgroundColor: colors.salem,
+    backgroundColor: colors.greenHaze,
     borderRadius: 40,
     elevation: 2,
     marginBottom: 30,
