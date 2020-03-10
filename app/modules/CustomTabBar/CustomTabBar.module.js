@@ -57,7 +57,7 @@ const CustomTabBar = ({ state, descriptors, navigation, route }) => {
               ]).start(() => {
                 Animated.timing(
                   state.routes[0].params?.bottom,
-                  { toValue: -100 }
+                  { toValue: -100, duration: 100 }
                 ).start(() => {
                   navigation.navigate(route.name);
                 })

@@ -1,6 +1,5 @@
 import React, { Component, useCallback } from 'react';
 import { View, Text, ScrollView, Animated } from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';
 
 class Home extends Component {
   offset = 0;
@@ -30,6 +29,7 @@ class Home extends Component {
   onScroll = (e) => {
     const currentOffsetY = e.nativeEvent.contentOffset.y;
     const velocity = e.nativeEvent.velocity.y
+    console.log(velocity)
     if ((currentOffsetY > this.offset) && velocity > 0.4) {
       if (this.state.scrolledToTop === false) {
         this.setState({ scrolledToTop: true }, () => {
@@ -42,7 +42,7 @@ class Home extends Component {
           ).start();
         })
       }
-    } else if ((currentOffsetY < this.offset) && velocity > -0.4) {
+    } else if ((currentOffsetY < this.offset) && velocity < -0.6) {
       if (this.state.scrolledToTop === true) {
         this.setState({ scrolledToTop: false }, () => {
           Animated.timing(
