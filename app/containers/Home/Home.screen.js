@@ -27,9 +27,10 @@ class Home extends Component {
   }
 
   onScroll = (e) => {
+    const { bottom } = this.props;
+    console.log(bottom, 'from redux')
     const currentOffsetY = e.nativeEvent.contentOffset.y;
     const velocity = e.nativeEvent.velocity.y
-    console.log(velocity)
     if ((currentOffsetY > this.offset) && velocity > 0.4) {
       if (this.state.scrolledToTop === false) {
         this.setState({ scrolledToTop: true }, () => {

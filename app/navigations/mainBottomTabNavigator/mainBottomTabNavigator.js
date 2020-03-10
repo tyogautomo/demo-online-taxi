@@ -2,7 +2,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { Home, ChooseOrigin, Profile } from '../screenConfig';
-import { CustomTabBar } from '../../modules/CustomTabBar/CustomTabBar.module';
+import CustomTabBar from '../../modules/CustomTabBar/CustomTabBar.module';
 
 const BottomTab = createBottomTabNavigator();
 

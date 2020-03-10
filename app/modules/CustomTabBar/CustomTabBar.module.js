@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { View, TouchableOpacity, Text, Animated } from 'react-native';
 import IconAwesome from 'react-native-vector-icons/FontAwesome';
+import { connect } from 'react-redux';
 
 import { colors } from '../../themes/colors';
 import { styles } from './CustomTabBar.style';
 
-const CustomTabBar = ({ state, descriptors, navigation, route }) => {
+const CustomTabBar = ({ state, descriptors, navigation, ...props }) => {
   const [scale] = useState(new Animated.Value(1));
-
+  const { bottom } = props;
   return (
     <Animated.View style={{ ...styles.tabBarContainer, bottom: state.routes[0].params?.bottom }}>
       {state.routes.map((route, index) => {
@@ -53,14 +54,13 @@ const CustomTabBar = ({ state, descriptors, navigation, route }) => {
                     toValue: 1,
                     duration: 100
                   }
-                )
-              ]).start(() => {
+                ),
                 Animated.timing(
                   state.routes[0].params?.bottom,
                   { toValue: -100, duration: 100 }
-                ).start(() => {
-                  navigation.navigate(route.name);
-                })
+                )
+              ]).start(() => {
+                navigation.navigate(route.name);
               })
             } else {
               navigation.navigate(route.name);
@@ -91,4 +91,12 @@ const CustomTabBar = ({ state, descriptors, navigation, route }) => {
   )
 };
 
-export { CustomTabBar };
+const mapState = state => ({
+  bottom: state.animatedReducer.bottom
+});
+const mapDispatch = dispatch => ({});
+
+export default connect(
+  mapState,
+  mapDispatch
+)(CustomTabBar);
