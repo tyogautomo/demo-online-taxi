@@ -40,7 +40,7 @@ class Home extends Component {
           }
         ).start();
       })
-    } else if ((currentOffsetY < this.offset) && velocity < -0.6 && (scrolledToTop === true)) {
+    } else if ((currentOffsetY < this.offset) && velocity < -0.5 && (scrolledToTop === true)) {
       this.setState({ scrolledToTop: false }, () => {
         Animated.timing(
           bottom,
