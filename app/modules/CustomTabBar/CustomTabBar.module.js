@@ -6,11 +6,11 @@ import { connect } from 'react-redux';
 import { colors } from '../../themes/colors';
 import { styles } from './CustomTabBar.style';
 
-const CustomTabBar = ({ state, descriptors, navigation, ...props }) => {
+const CustomTabBar = ({ state, descriptors, navigation, bottom }) => {
   const [scale] = useState(new Animated.Value(1));
-  const { bottom } = props;
+
   return (
-    <Animated.View style={{ ...styles.tabBarContainer, bottom: state.routes[0].params?.bottom }}>
+    <Animated.View style={{ ...styles.tabBarContainer, bottom: bottom }}>
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const label =
@@ -56,7 +56,7 @@ const CustomTabBar = ({ state, descriptors, navigation, ...props }) => {
                   }
                 ),
                 Animated.timing(
-                  state.routes[0].params?.bottom,
+                  bottom,
                   { toValue: -100, duration: 100 }
                 )
               ]).start(() => {

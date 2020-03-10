@@ -1,23 +1,21 @@
-import React, { Component, useCallback } from 'react';
+import React, { Component } from 'react';
 import { View, Text, ScrollView, Animated } from 'react-native';
 
 class Home extends Component {
   offset = 0;
   state = {
-    animatedBottom: new Animated.Value(0),
     scrolledToTop: false
   }
 
   componentDidMount() {
-    this.setInitialParam();
     this.onFocus();
   }
 
   onFocus = () => {
-    const { navigation } = this.props;
+    const { navigation, bottom } = this.props;
     navigation.addListener('focus', () => {
       Animated.timing(
-        this.state.animatedBottom,
+        bottom,
         {
           toValue: 0,
           duration: 200
@@ -28,43 +26,33 @@ class Home extends Component {
 
   onScroll = (e) => {
     const { bottom } = this.props;
-    console.log(bottom, 'from redux')
+    const { scrolledToTop } = this.state;
+
     const currentOffsetY = e.nativeEvent.contentOffset.y;
     const velocity = e.nativeEvent.velocity.y
-    if ((currentOffsetY > this.offset) && velocity > 0.4) {
-      if (this.state.scrolledToTop === false) {
-        this.setState({ scrolledToTop: true }, () => {
-          Animated.timing(
-            this.state.animatedBottom,
-            {
-              toValue: -100,
-              duration: 200
-            }
-          ).start();
-        })
-      }
-    } else if ((currentOffsetY < this.offset) && velocity < -0.6) {
-      if (this.state.scrolledToTop === true) {
-        this.setState({ scrolledToTop: false }, () => {
-          Animated.timing(
-            this.state.animatedBottom,
-            {
-              toValue: 0,
-              duration: 200
-            }
-          ).start();
-        })
-      }
+    if ((currentOffsetY > this.offset) && velocity > 0.4 && (scrolledToTop === false)) {
+      this.setState({ scrolledToTop: true }, () => {
+        Animated.timing(
+          bottom,
+          {
+            toValue: -100,
+            duration: 200
+          }
+        ).start();
+      })
+    } else if ((currentOffsetY < this.offset) && velocity < -0.6 && (scrolledToTop === true)) {
+      this.setState({ scrolledToTop: false }, () => {
+        Animated.timing(
+          bottom,
+          {
+            toValue: 0,
+            duration: 200
+          }
+        ).start();
+      })
     }
     this.offset = currentOffsetY;
   }
-
-  setInitialParam = () => {
-    const { navigation } = this.props;
-    navigation.setParams({
-      bottom: this.state.animatedBottom
-    })
-  };
 
   render() {
     return (
