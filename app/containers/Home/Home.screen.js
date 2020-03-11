@@ -136,7 +136,7 @@ class Home extends Component {
   renderMainPromo = () => {
     return (
       <View style={{ width: '100%', borderRadius: 10, marginBottom: 10, backgroundColor: colors.white, elevation: 4, borderTopLeftRadius: 10, borderTopRightRadius: 10 }}>
-        <ImageBackground source={promoPoster2} style={{ width: '100%', height: 100, borderTopLeftRadius: 10, borderTopRightRadius: 10 }}></ImageBackground>
+        <ImageBackground source={promoPoster2} style={{ width: '100%', height: 100, borderTopLeftRadius: 10, borderTopRightRadius: 10 }} imageStyle={{ borderTopLeftRadius: 10, borderTopRightRadius: 10 }}></ImageBackground>
         <View style={{ paddingHorizontal: 7, paddingVertical: 9 }}>
           <Text style={{ fontFamily: 'OsnovaProBold', lineHeight: 20, textAlign: 'justify', fontSize: 12, marginBottom: 6 }}>Big Sale Up To 70% shop on this store</Text>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>

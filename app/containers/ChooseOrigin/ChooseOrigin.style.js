@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
   summaryContainer: {
     position: 'absolute',
     width: '90%',
-    height: 180,
+    height: 170,
     backgroundColor: colors.white,
     elevation: 4,
     borderRadius: 8,
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     padding: 20
   },
-  textNow: (bookNow) => ({
+  textNow: bookNow => ({
     borderWidth: bookNow ? 1 : 0,
     paddingHorizontal: 10,
     paddingVertical: 6,
@@ -41,7 +41,14 @@ const styles = StyleSheet.create({
     fontFamily: 'OsnovaPro',
     fontSize: 13,
     color: !bookNow ? colors.greenHaze : 'black'
-  })
+  }),
+  originPinContainer: {
+    position: 'absolute',
+    width: '100%',
+    height: DEVICE_HEIGHT - 75,
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
 });
 
 export { styles };
