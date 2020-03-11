@@ -1,7 +1,8 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import { Home, ChooseOrigin, Profile } from '../screenConfig';
+import { ChooseDirectionStackNavigator } from '../chooseDirectionStackNavigator/chooseDirectionStackNavigator';
+import { Home, Profile } from '../screenConfig';
 import CustomTabBar from '../../modules/CustomTabBar/CustomTabBar.module';
 
 const BottomTab = createBottomTabNavigator();
@@ -20,7 +21,7 @@ const MainBottomTabNavigator = () => {
       />
       <BottomTab.Screen
         name="ChooseDirection"
-        component={ChooseOrigin}
+        component={ChooseDirectionStackNavigator}
         options={{
           tabBarLabel: () => null
         }} />
