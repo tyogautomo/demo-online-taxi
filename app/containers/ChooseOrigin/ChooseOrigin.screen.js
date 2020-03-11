@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import MapView from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
+import IconAwesome from 'react-native-vector-icons/FontAwesome';
+import IconEntypo from 'react-native-vector-icons/Entypo';
 
 import { styles } from './ChooseOrigin.style';
 import { colors } from '../../themes/colors';
@@ -9,11 +11,20 @@ import { colors } from '../../themes/colors';
 class ChooseOrigin extends Component {
   state = {
     location: { latitude: 0, longitude: 0, },
-    bottomMargin: 1
+    bottomMargin: 1,
+    bookNow: true
   };
 
   componentDidMount() {
     this.getCurrentLocation();
+  }
+
+  onPressTime = (status) => {
+    if (status === 'now') {
+      this.setState({ bookNow: true });
+    } else {
+      this.setState({ bookNow: false });
+    }
   }
 
   onSuccessLocation = (info) => {
@@ -39,9 +50,24 @@ class ChooseOrigin extends Component {
   };
 
   renderDirectionSummary = () => {
-    return (
-      <View style={{ position: 'absolute', width: '90%', height: 100, backgroundColor: colors.white, elevation: 4, borderRadius: 8, alignSelf: 'center', bottom: 0 }}>
+    const { bookNow } = this.state;
 
+    return (
+      <View style={styles.summaryContainer}>
+        <View style={{ flexDirection: 'row', marginBottom: 10 }}>
+          <Text style={styles.textNow(bookNow)} onPress={() => this.onPressTime('now')}>Now</Text>
+          <Text style={styles.textLater(bookNow)} onPress={() => this.onPressTime('later')}>Later</Text>
+        </View>
+        <View style={{ flexDirection: 'row' }}>
+          <View style={{ alignItems: 'center', justifyContent: 'space-between', height: 100 }}>
+            <IconAwesome name="dot-circle-o" size={25} color={colors.danube} />
+            <IconEntypo name="dots-three-vertical" size={18} color={colors.silver} />
+            <IconEntypo name="location-pin" size={28} color={colors.chestnutRose} />
+          </View>
+          <View>
+
+          </View>
+        </View>
       </View>
     )
   }
