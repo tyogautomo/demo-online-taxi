@@ -8,11 +8,12 @@ import {
   ImageBackground
 } from 'react-native';
 import IconMaterial from 'react-native-vector-icons/MaterialCommunityIcons';
-import IconAnt from 'react-native-vector-icons/AntDesign'
+import IconAnt from 'react-native-vector-icons/AntDesign';
+import IconEntypo from 'react-native-vector-icons/Entypo';
 
 import { styles } from './Home.style';
 import { colors } from '../../themes/colors';
-import { promoPoster } from '../../themes/images';
+import { promoPoster, promoPoster2 } from '../../themes/images';
 
 class Home extends Component {
   offset = 0;
@@ -107,10 +108,12 @@ class Home extends Component {
 
     return (
       <View style={styles.menuContainer}>
-        {data.map(item => (
+        {data.map((item, index) => (
           <TouchableOpacity key={item} activeOpacity={0.8}>
-            <ImageBackground style={styles.menuItem}>
-              {/* <Text>menu grid</Text> */}
+            <ImageBackground style={styles.menuItem(data.length, index)}>
+              {index === data.length - 1 ? (
+                <IconEntypo name="dots-three-horizontal" size={24} />
+              ) : null}
             </ImageBackground>
           </TouchableOpacity>
         ))}
@@ -123,20 +126,53 @@ class Home extends Component {
       <View style={{ alignItems: 'center', backgroundColor: colors.white, marginTop: 6, paddingVertical: 20 }}>
         <TouchableOpacity activeOpacity={0.8} style={{ flexDirection: 'row', height: 40, backgroundColor: colors.white, elevation: 2, borderRadius: 5, paddingVertical: 10, paddingHorizontal: 15, justifyContent: 'center', alignItems: 'center' }}>
           <IconAnt name="wallet" size={20} color={colors.greenHaze} style={{ marginRight: 10 }} />
-          <Text style={{ textAlign: 'center', fontFamily: 'OsnovaProBold' }}>Top Up .</Text>
+          <Text style={{ textAlign: 'center', fontFamily: 'OsnovaProBold' }}>Top Up •</Text>
           <Text style={{ textAlign: 'center', fontFamily: 'OsnovaPro' }}> Wallet</Text>
         </TouchableOpacity>
       </View>
     );
   };
 
-  renderPromos = () => {
+  renderMainPromo = () => {
     return (
-      <View style={{ marginTop: 3, paddingVertical: 20, paddingHorizontal: 25, backgroundColor: colors.white }}>
-        <View>
-          <ImageBackground source={promoPoster} style={{ width: 130, height: 150, borderRadius: 10 }} imageStyle={{ borderRadius: 10 }} />
+      <View style={{ width: '100%', borderRadius: 10, marginBottom: 10, backgroundColor: colors.white, elevation: 4 }}>
+        <ImageBackground source={promoPoster2} style={{ width: '100%', height: 100, borderTopLeftRadius: 10, borderTopRightRadius: 10 }}></ImageBackground>
+        <View style={{ paddingHorizontal: 7, paddingVertical: 9 }}>
+          <Text style={{ fontFamily: 'OsnovaProBold', lineHeight: 20, textAlign: 'justify', fontSize: 12, marginBottom: 6 }}>Big Sale Up To 70% shop on this store</Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <IconEntypo name="calendar" size={15} color={colors.silver} style={{ marginRight: 5 }} />
+            <Text style={{ fontFamily: 'OsnovaPro', fontSize: 12, color: colors.silver }}>Until 20 Mar</Text>
+          </View>
         </View>
       </View>
+    );
+  };
+
+  renderPromos = () => {
+    const { promos } = this.state;
+
+    return (
+      <View style={styles.promosContainer}>
+        {this.renderMainPromo()}
+        {promos.map(promo => this.renderPromoItem(promo))}
+      </View>
+    );
+  };
+
+  renderPromoItem = (promo) => {
+    return (
+      <TouchableOpacity activeOpacity={0.6} key={promo}>
+        <View style={styles.promoItemContainer}>
+          <ImageBackground source={promoPoster} style={styles.promoImageBackground} imageStyle={styles.promoImageStyle} />
+          <View style={{ paddingHorizontal: 7, paddingVertical: 9 }}>
+            <Text style={{ fontFamily: 'OsnovaProBold', lineHeight: 20, textAlign: 'justify', fontSize: 12, marginBottom: 6 }}>Big Sale Up To 70% shop on this store</Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <IconEntypo name="calendar" size={15} color={colors.silver} style={{ marginRight: 5 }} />
+              <Text style={{ fontFamily: 'OsnovaPro', fontSize: 12, color: colors.silver }}>Until 20 Mar</Text>
+            </View>
+          </View>
+        </View>
+      </TouchableOpacity>
     );
   };
 
@@ -148,23 +184,6 @@ class Home extends Component {
         {this.renderTopUp()}
         {this.renderMenuGrid()}
         {this.renderPromos()}
-        <Text style={{ textAlign: 'justify', marginBottom: 30 }}> This is home screen page. The screen page is a home page that show home page. What an awful page. This is home screen page. The screen page is a home page that show home page. What an awful page. This is home screen page. The screen page is a home page that show home page. What an awful page.</Text>
-        <Text style={{ textAlign: 'justify', marginBottom: 30 }}> This is home screen page. The screen page is a home page that show home page. What an awful page. This is home screen page. The screen page is a home page that show home page. What an awful page. This is home screen page. The screen page is a home page that show home page. What an awful page.</Text>
-        <Text style={{ textAlign: 'justify', marginBottom: 30 }}> This is home screen page. The screen page is a home page that show home page. What an awful page. This is home screen page. The screen page is a home page that show home page. What an awful page. This is home screen page. The screen page is a home page that show home page. What an awful page.</Text>
-        <Text style={{ textAlign: 'justify', marginBottom: 30 }}> This is home screen page. The screen page is a home page that show home page. What an awful page. This is home screen page. The screen page is a home page that show home page. What an awful page. This is home screen page. The screen page is a home page that show home page. What an awful page.</Text>
-        <Text style={{ textAlign: 'justify', marginBottom: 30 }}> This is home screen page. The screen page is a home page that show home page. What an awful page. This is home screen page. The screen page is a home page that show home page. What an awful page. This is home screen page. The screen page is a home page that show home page. What an awful page.</Text>
-        <Text style={{ textAlign: 'justify', marginBottom: 30 }}> This is home screen page. The screen page is a home page that show home page. What an awful page. This is home screen page. The screen page is a home page that show home page. What an awful page. This is home screen page. The screen page is a home page that show home page. What an awful page.</Text>
-        <Text style={{ textAlign: 'justify', marginBottom: 30 }}> This is home screen page. The screen page is a home page that show home page. What an awful page. This is home screen page. The screen page is a home page that show home page. What an awful page. This is home screen page. The screen page is a home page that show home page. What an awful page.</Text>
-        <Text style={{ textAlign: 'justify', marginBottom: 30 }}> This is home screen page. The screen page is a home page that show home page. What an awful page. This is home screen page. The screen page is a home page that show home page. What an awful page. This is home screen page. The screen page is a home page that show home page. What an awful page.</Text>
-        <Text style={{ textAlign: 'justify', marginBottom: 30 }}> This is home screen page. The screen page is a home page that show home page. What an awful page. This is home screen page. The screen page is a home page that show home page. What an awful page. This is home screen page. The screen page is a home page that show home page. What an awful page.</Text>
-        <Text style={{ textAlign: 'justify', marginBottom: 30 }}> This is home screen page. The screen page is a home page that show home page. What an awful page. This is home screen page. The screen page is a home page that show home page. What an awful page. This is home screen page. The screen page is a home page that show home page. What an awful page.</Text>
-        <Text style={{ textAlign: 'justify', marginBottom: 30 }}> This is home screen page. The screen page is a home page that show home page. What an awful page. This is home screen page. The screen page is a home page that show home page. What an awful page. This is home screen page. The screen page is a home page that show home page. What an awful page.</Text>
-        <Text style={{ textAlign: 'justify', marginBottom: 30 }}> This is home screen page. The screen page is a home page that show home page. What an awful page. This is home screen page. The screen page is a home page that show home page. What an awful page. This is home screen page. The screen page is a home page that show home page. What an awful page.</Text>
-        <Text style={{ textAlign: 'justify', marginBottom: 30 }}> This is home screen page. The screen page is a home page that show home page. What an awful page. This is home screen page. The screen page is a home page that show home page. What an awful page. This is home screen page. The screen page is a home page that show home page. What an awful page.</Text>
-        <Text style={{ textAlign: 'justify', marginBottom: 30 }}> This is home screen page. The screen page is a home page that show home page. What an awful page. This is home screen page. The screen page is a home page that show home page. What an awful page. This is home screen page. The screen page is a home page that show home page. What an awful page.</Text>
-        <Text style={{ textAlign: 'justify', marginBottom: 30 }}> This is home screen page. The screen page is a home page that show home page. What an awful page. This is home screen page. The screen page is a home page that show home page. What an awful page. This is home screen page. The screen page is a home page that show home page. What an awful page.</Text>
-        <Text style={{ textAlign: 'justify', marginBottom: 30 }}> This is home screen page. The screen page is a home page that show home page. What an awful page. This is home screen page. The screen page is a home page that show home page. What an awful page. This is home screen page. The screen page is a home page that show home page. What an awful page.</Text>
-        <Text style={{ textAlign: 'justify', marginBottom: 30 }}> This is home screen page. The screen page is a home page that show home page. What an awful page. This is home screen page. The screen page is a home page that show home page. What an awful page. This is home screen page. The screen page is a home page that show home page. What an awful page.</Text>
       </ScrollView>
     );
   };

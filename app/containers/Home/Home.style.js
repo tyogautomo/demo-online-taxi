@@ -47,12 +47,40 @@ const styles = StyleSheet.create({
     alignContent: 'space-between',
     height: (DEVICE_WIDTH / 6) * 3
   },
-  menuItem: {
+  menuItem: (length, index) => ({
     width: DEVICE_WIDTH / 6,
     height: DEVICE_WIDTH / 6,
-    backgroundColor: colors.greenHaze,
+    backgroundColor: index === length - 1 ? colors.silver : colors.greenHaze,
     borderRadius: (DEVICE_WIDTH / 6) / 2,
-    marginHorizontal: DEVICE_WIDTH * 0.01
+    marginHorizontal: DEVICE_WIDTH * 0.01,
+    justifyContent: 'center',
+    alignItems: 'center'
+  }),
+  promosContainer: {
+    marginTop: 3,
+    paddingVertical: 20,
+    paddingHorizontal: 25,
+    backgroundColor: colors.white,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between'
+  },
+  promoItemContainer: {
+    backgroundColor: colors.white,
+    borderRadius: 10,
+    elevation: 3,
+    width: DEVICE_WIDTH / 2.4,
+    marginBottom: 10
+  },
+  promoImageBackground: {
+    width: DEVICE_WIDTH / 2.4,
+    height: 150,
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10
+  },
+  promoImageStyle: {
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10
   }
 });
 
