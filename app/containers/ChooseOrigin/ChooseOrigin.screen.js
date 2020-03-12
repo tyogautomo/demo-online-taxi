@@ -184,7 +184,6 @@ class ChooseOrigin extends Component {
     return (
       <View>
         {this.renderMaps()}
-        <Text>This is choose origin page</Text>
       </View>
     );
   };
