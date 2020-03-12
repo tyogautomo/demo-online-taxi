@@ -48,6 +48,28 @@ const styles = StyleSheet.create({
     height: DEVICE_HEIGHT - 75,
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  directionTextContainer: {
+    justifyContent: 'space-between',
+    height: 90,
+    paddingVertical: 3,
+    paddingLeft: 20,
+    flex: 1
+  },
+  directionIconContainer: {
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    height: 90
+  },
+  timeContainer: {
+    flexDirection: 'row',
+    marginBottom: 10
+  },
+  separatorDirection: {
+    borderBottomWidth: 1,
+    width: '100%', height: 1,
+    backgroundColor: colors.silver,
+    borderColor: colors.silver
   }
 });
 
