@@ -54,7 +54,6 @@ class ChooseOrigin extends Component {
       Animated.timing(topPin, { toValue: 3, duration: 300 }),
       Animated.timing(scaleX, { toValue: 2, duration: 300 })
     ]).start(() => {
-      console.log(info)
       const longLat = {
         latitude: info.latitude,
         longitude: info.longitude

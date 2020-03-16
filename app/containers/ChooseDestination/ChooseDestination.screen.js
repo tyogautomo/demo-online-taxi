@@ -16,6 +16,7 @@ class ChooseDestination extends Component {
     bottomMargin: 1,
     topPin: new Animated.Value(3),
     scaleX: new Animated.Value(2),
+    isDragged: false
   };
 
   componentDidMount() {
@@ -52,6 +53,30 @@ class ChooseDestination extends Component {
     ]).start();
   };
 
+  onPanDrag = () => {
+    const { isDragged } = this.state;
+    if (!isDragged) {
+      this.setState({ isDragged: true });
+    }
+  };
+
+  onRegionChangeComplete = (info) => {
+    const { requestDestinationPoint } = this.props;
+
+    const { topPin, scaleX } = this.state;
+    Animated.parallel([
+      Animated.timing(topPin, { toValue: 3, duration: 300 }),
+      Animated.timing(scaleX, { toValue: 2, duration: 300 })
+    ]).start(() => {
+      const longLat = {
+        latitude: info.latitude,
+        longitude: info.longitude
+      };
+      requestDestinationPoint(longLat);
+      this.setState({ isDragged: false });
+    });
+  };
+
   getCurrentLocation = () => {
     Geolocation.getCurrentPosition(
       this.onSuccessLocation,
@@ -80,7 +105,7 @@ class ChooseDestination extends Component {
   };
 
   renderDirectionSummary = () => {
-    const { originPoint } = this.props;
+    const { originPoint, destinationPoint } = this.props;
 
     return (
       <View style={styles.summaryContainer}>
@@ -104,7 +129,15 @@ class ChooseDestination extends Component {
             </TouchableOpacity>
             <View style={styles.separatorDirection} />
             <TouchableOpacity activeOpacity={0.8} onPress={this.onPressDestination}>
-              <Text style={{ color: colors.silver, fontFamily: 'OsnovaPro' }}>Where to go?</Text>
+              <TextTicker
+                style={{ fontFamily: 'OsnovaPro' }}
+                duration={7000}
+                loop
+                repeatSpacer={200}
+                marqueeDelay={800}
+              >
+                {destinationPoint.formatted_address.slice(0, 50) || 'Where to go?'}
+              </TextTicker>
             </TouchableOpacity>
           </View>
         </View>
@@ -146,10 +179,10 @@ class ChooseDestination extends Component {
         <MapView
           style={{ ...styles.mapContainer, marginBottom: bottomMargin }}
           onMapReady={() => this.setState({ bottomMargin: 0 })}
-          // onRegionChangeComplete={this.onRegionChangeComplete}
+          onRegionChangeComplete={this.onRegionChangeComplete}
           onTouchStart={this.onTouchStart}
           onTouchEnd={this.onTouchEnd}
-          // onPanDrag={this.onPanDrag}
+          onPanDrag={this.onPanDrag}
           camera={{
             center: currentLocation,
             pitch: 0,
