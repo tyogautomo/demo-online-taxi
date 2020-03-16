@@ -77,6 +77,11 @@ class ChooseDestination extends Component {
     });
   };
 
+  onPressBringMe = () => {
+    const { navigation } = this.props;
+    navigation.navigate('DirectionSummary');
+  };
+
   getCurrentLocation = () => {
     Geolocation.getCurrentPosition(
       this.onSuccessLocation,
@@ -124,7 +129,7 @@ class ChooseDestination extends Component {
                 repeatSpacer={200}
                 marqueeDelay={800}
               >
-                {originPoint.formatted_address.slice(0, 50)}
+                {`${originPoint.formatted_address.slice(0, 50)}...`}
               </TextTicker>
             </TouchableOpacity>
             <View style={styles.separatorDirection} />
@@ -136,7 +141,7 @@ class ChooseDestination extends Component {
                 repeatSpacer={200}
                 marqueeDelay={800}
               >
-                {destinationPoint.formatted_address.slice(0, 50) || 'Where to go?'}
+                {`${destinationPoint.formatted_address.slice(0, 50)}...` || 'Where to go?'}
               </TextTicker>
             </TouchableOpacity>
           </View>
@@ -149,7 +154,10 @@ class ChooseDestination extends Component {
     const { topPin, scaleX } = this.state;
     return (
       <View style={styles.originPinContainer}>
-        <View style={{ alignItems: 'center', bottom: 13 }}>
+        <TouchableOpacity activeOpacity={0.8} style={styles.bringMeContainer} onPress={this.onPressBringMe}>
+          <Text style={{ fontFamily: 'OsnovaPro' }}>Bring Me Here</Text>
+        </TouchableOpacity>
+        <View style={{ alignItems: 'center', bottom: 28 }}>
           <Animated.Image source={pin} style={{ width: 25, height: 25, top: topPin }} />
           <Animated.View style={{ width: 5, height: 5, backgroundColor: 'rgba(0,0,0,0.3)', borderRadius: 20, transform: [{ scaleX: scaleX }] }} />
         </View>

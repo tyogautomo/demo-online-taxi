@@ -69,6 +69,15 @@ const styles = StyleSheet.create({
     width: '100%', height: 1,
     backgroundColor: colors.silver,
     borderColor: colors.silver
+  },
+  bringMeContainer: {
+    backgroundColor: colors.white,
+    top: -35,
+    zIndex: 2,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    elevation: 2,
+    borderRadius: 5
   }
 });
 
