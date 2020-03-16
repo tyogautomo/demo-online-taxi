@@ -131,7 +131,7 @@ class ChooseOrigin extends Component {
               </TextTicker>
             </View>
             <View style={styles.separatorDirection} />
-            <TouchableOpacity activeOpacity={0.8} onPress={this.onPressDestination}>
+            <TouchableOpacity onPress={this.onPressDestination}>
               <Text style={{ color: colors.silver, fontFamily: 'OsnovaPro' }}>Where to go?</Text>
             </TouchableOpacity>
           </View>

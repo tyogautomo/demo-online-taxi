@@ -11,7 +11,7 @@ const initialState = {
     geometry: {
       location: {
         lat: 0,
-        long: 0
+        lng: 0
       }
     },
     place_id: ''

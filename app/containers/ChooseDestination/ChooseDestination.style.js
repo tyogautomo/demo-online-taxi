@@ -13,13 +13,13 @@ const styles = StyleSheet.create({
   summaryContainer: {
     position: 'absolute',
     width: '90%',
-    height: 170,
+    height: 140,
     backgroundColor: colors.white,
     elevation: 4,
     borderRadius: 8,
     alignSelf: 'center',
     padding: 20,
-    top: 60
+    top: 20
   },
   textNow: bookNow => ({
     borderWidth: bookNow ? 1 : 0,
