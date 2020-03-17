@@ -205,7 +205,7 @@ class ChooseDestination extends Component {
         </MapView>
       </View >
     )
-  }
+  };
 
   render() {
     return (
