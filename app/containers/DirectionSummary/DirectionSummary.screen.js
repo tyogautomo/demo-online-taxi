@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker, Polyline } from 'react-native-maps';
 import IconAwesome from 'react-native-vector-icons/FontAwesome';
+import IconEntypo from 'react-native-vector-icons/Entypo';
+import IconMaterial from 'react-native-vector-icons/MaterialIcons';
 
 import { styles } from './DirectionSummary.style';
 import { originPin, destinationPin } from '../../themes/images';
@@ -34,6 +36,11 @@ class DirectionSummary extends Component {
 
   onPressItem = (type) => {
     this.setState({ type })
+  }
+
+  onPressBack = () => {
+    const { navigation } = this.props;
+    navigation.goBack();
   }
 
   getRoute = async () => {
@@ -80,6 +87,16 @@ class DirectionSummary extends Component {
       });
     }, 800);
   };
+
+  renderBackButton = () => {
+    return (
+      <View style={{ position: 'absolute', margin: 20 }}>
+        <TouchableOpacity style={{ backgroundColor: colors.white, padding: 5, borderRadius: 20, elevation: 4 }} onPress={this.onPressBack}>
+          <IconMaterial name="keyboard-arrow-left" size={30} />
+        </TouchableOpacity>
+      </View>
+    )
+  }
 
   renderOriginMarker = () => {
     const { originPoint: { geometry: { location } } } = this.props;
@@ -131,9 +148,10 @@ class DirectionSummary extends Component {
         </View>
         {this.renderRideList()}
         {this.renderFinance()}
+        {this.renderBookButtons()}
       </View>
     )
-  }
+  };
 
   renderRideList = () => {
     const { rideList } = this.state;
@@ -149,7 +167,7 @@ class DirectionSummary extends Component {
   renderRideItem = (ride, index) => {
     const { type } = this.state;
     return (
-      <TouchableOpacity style={styles.rideItem(type, ride.name)} key={index} onPress={() => this.onPressItem(ride.name)}>
+      <TouchableOpacity activeOpacity={0.7} style={styles.rideItem(type, ride.name)} key={index} onPress={() => this.onPressItem(ride.name)}>
         <View style={{ flex: 1 }}>
           <IconAwesome name={ride.icon} color={colors.greenHaze} size={30} />
         </View>
@@ -169,13 +187,36 @@ class DirectionSummary extends Component {
 
   renderFinance = () => {
     return (
-      <View style={{ flexDirection: 'row' }}>
-        <View style={{ flexDirection: 'row' }}>
-          <Text style={{ backgroundColor: colors.white }}>Cash</Text>
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 8 }}>
+        <View style={styles.financeInfoContainer}>
+          <Text style={styles.payType}>Cash</Text>
+          <View>
+            <Text style={styles.balanceTitle}>Balance</Text>
+            <Text style={styles.balance}>IDR 234.987</Text>
+          </View>
+        </View>
+        <View style={styles.promoContainer}>
+          <Text style={{ fontFamily: 'OsnovaPro' }}>Promo</Text>
+        </View>
+        <View style={styles.financeMenu}>
+          <IconEntypo name="dots-three-horizontal" color={colors.silver} size={25} />
         </View>
       </View>
     )
-  }
+  };
+
+  renderBookButtons = () => {
+    return (
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+        <TouchableOpacity activeOpacity={0.7}>
+          <Text style={styles.bookButton}>Book</Text>
+        </TouchableOpacity>
+        <TouchableOpacity activeOpacity={0.7}>
+          <Text style={styles.rightNowButton}>Priority</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
 
   renderMap = () => {
     const { bottomMargin } = this.state;
@@ -198,7 +239,7 @@ class DirectionSummary extends Component {
           }
         ]
       }
-    ]
+    ];
 
     return (
       <View>
@@ -233,6 +274,7 @@ class DirectionSummary extends Component {
       <View style={{ flex: 1 }}>
         {this.renderMap()}
         {this.renderCostSheet()}
+        {this.renderBackButton()}
       </View>
     )
   }

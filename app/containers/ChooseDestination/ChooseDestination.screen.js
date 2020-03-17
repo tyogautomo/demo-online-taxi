@@ -184,11 +184,31 @@ class ChooseDestination extends Component {
 
   renderMap = () => {
     const { currentLocation, bottomMargin } = this.state;
+    const customStyle = [
+      {
+        "featureType": "poi.business",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      },
+      {
+        "featureType": "poi.park",
+        "elementType": "labels.text",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      }
+    ]
 
     return (
       <View>
         <MapView
           style={{ ...styles.mapContainer, marginBottom: bottomMargin }}
+          customMapStyle={customStyle}
           onMapReady={() => this.setState({ bottomMargin: 0 })}
           onRegionChangeComplete={this.onRegionChangeComplete}
           onTouchStart={this.onTouchStart}
