@@ -141,7 +141,10 @@ class ChooseDestination extends Component {
                 repeatSpacer={200}
                 marqueeDelay={800}
               >
-                {`${destinationPoint.formatted_address.slice(0, 50)}...` || 'Where to go?'}
+                {
+                  `${destinationPoint.formatted_address.slice(0, 50)}...` ||
+                  <Text style={{ fontFamily: 'OsnovaProBold' }}>I'm going to..</Text>
+                }
               </TextTicker>
             </TouchableOpacity>
           </View>

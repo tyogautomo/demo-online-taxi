@@ -4,7 +4,8 @@ const colors = {
   white: '#fff',
   greenHaze: '#00B140',
   chestnutRose: '#c95555',
-  danube: '#579ac9'
+  danube: '#579ac9',
+  skyBlue: '#64c4ed'
 }
 
 export { colors };

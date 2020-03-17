@@ -1,5 +1,6 @@
 import { API_KEY } from 'react-native-dotenv';
 import axios from 'axios';
+import polyline from '@mapbox/polyline';
 
 import {
   REQUEST_POINT_ADDRESS,
@@ -7,14 +8,11 @@ import {
   REQUEST_POINT_ADDRESS_FAILED,
   REQUEST_DESTINATION_POINT,
   REQUEST_DESTINATION_POINT_SUCCESS,
-  REQUEST_DESTINATION_POINT_FAILED
+  REQUEST_DESTINATION_POINT_FAILED,
+  REQUEST_DIRECTION_ROUTE,
+  REQUEST_DIRECTION_ROUTE_SUCCESS,
+  REQUEST_DIRECTION_ROUTE_FAILED
 } from '../constant';
-
-import { REQUEST_LOCATION } from '../constant';
-
-const requestRoute = () => dispatch => {
-  dispatch({ type: REQUEST_LOCATION })
-}
 
 const requestPointAddress = ({ latitude, longitude }) => async dispatch => {
   try {
@@ -37,7 +35,6 @@ const requestDestinationPoint = ({ latitude, longitude }) => async dispatch => {
     const { data } = await axios({
       url: `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${API_KEY}`
     });
-    console.log(data, 'DATA BITCHH <<<<<<<<')
     dispatch({
       type: REQUEST_DESTINATION_POINT_SUCCESS,
       payload: data.results[0]
@@ -47,8 +44,28 @@ const requestDestinationPoint = ({ latitude, longitude }) => async dispatch => {
   }
 };
 
+const requestDirectionRoute = ({ origin, destination }) => async dispatch => {
+  try {
+    dispatch({ type: REQUEST_DIRECTION_ROUTE });
+    const { data } = await axios({
+      url: `https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=${API_KEY}`
+    });
+    const decode = polyline.decode(data.routes[0].overview_polyline.points);
+    const formatted = decode.map(coord => ({
+      latitude: coord[0],
+      longitude: coord[1]
+    }));
+    dispatch({
+      type: REQUEST_DIRECTION_ROUTE_SUCCESS,
+      payload: formatted
+    })
+  } catch (error) {
+    dispatch({ type: REQUEST_DIRECTION_ROUTE_FAILED })
+  }
+}
+
 export {
-  requestRoute,
+  requestDirectionRoute,
   requestPointAddress,
   requestDestinationPoint
 };

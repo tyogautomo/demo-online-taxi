@@ -5,7 +5,10 @@ import {
   REQUEST_POINT_ADDRESS_FAILED,
   REQUEST_DESTINATION_POINT,
   REQUEST_DESTINATION_POINT_SUCCESS,
-  REQUEST_DESTINATION_POINT_FAILED
+  REQUEST_DESTINATION_POINT_FAILED,
+  REQUEST_DIRECTION_ROUTE,
+  REQUEST_DIRECTION_ROUTE_SUCCESS,
+  REQUEST_DIRECTION_ROUTE_FAILED
 } from '../constant';
 
 const initialState = {
@@ -29,8 +32,10 @@ const initialState = {
     },
     place_id: ''
   },
+  directionRoutes: [],
   isRequestLocation: false,
-  isRequestDestinationPoint: false
+  isRequestDestinationPoint: false,
+  isRequestDirectionRoutes: false
 }
 
 const mapReducer = (state = initialState, action) => {
@@ -78,6 +83,23 @@ const mapReducer = (state = initialState, action) => {
       return {
         ...state,
         isRequestDestinationPoint: false
+      }
+    case REQUEST_DIRECTION_ROUTE:
+      return {
+        ...state,
+        directionRoutes: [],
+        isRequestDirectionRoutes: true
+      }
+    case REQUEST_DIRECTION_ROUTE_SUCCESS:
+      return {
+        ...state,
+        directionRoutes: action.payload,
+        isRequestDirectionRoutes: false
+      }
+    case REQUEST_DIRECTION_ROUTE_FAILED:
+      return {
+        ...state,
+        isRequestDirectionRoutes: false
       }
     default:
       return { ...state }
