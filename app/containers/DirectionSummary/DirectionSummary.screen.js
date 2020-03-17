@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker, Polyline } from 'react-native-maps';
 import IconAwesome from 'react-native-vector-icons/FontAwesome';
 
@@ -23,13 +23,18 @@ class DirectionSummary extends Component {
       cost: '18K',
       desc: '1 - 4 seats',
       icon: 'car'
-    }]
+    }],
+    type: 'TaxiBike'
   };
 
   componentDidMount() {
     this.mapFitMarker();
-    // this.getRoute();
+    this.getRoute();
   };
+
+  onPressItem = (type) => {
+    this.setState({ type })
+  }
 
   getRoute = async () => {
     const {
@@ -125,6 +130,7 @@ class DirectionSummary extends Component {
           <Text style={{ fontFamily: 'OsnovaProBold', color: colors.skyBlue }}>View All</Text>
         </View>
         {this.renderRideList()}
+        {this.renderFinance()}
       </View>
     )
   }
@@ -141,25 +147,34 @@ class DirectionSummary extends Component {
   };
 
   renderRideItem = (ride, index) => {
+    const { type } = this.state;
     return (
-      <View style={{ paddingHorizontal: 10, paddingVertical: 20, flexDirection: 'row', alignItems: 'center', borderRadius: 7, borderWidth: 1, marginBottom: 8, borderColor: colors.greenHaze }} key={index}>
+      <TouchableOpacity style={styles.rideItem(type, ride.name)} key={index} onPress={() => this.onPressItem(ride.name)}>
         <View style={{ flex: 1 }}>
           <IconAwesome name={ride.icon} color={colors.greenHaze} size={30} />
         </View>
         <View style={{ flex: 3 }}>
           <Text style={{ fontFamily: 'OsnovaProBold', fontSize: 16 }}>{ride.name}</Text>
-          <Text style={{ fontFamily: 'OsnovaPro', fontSize: 13 }}>{ride.desc}</Text>
+          {ride.desc ? (
+            <Text style={{ fontFamily: 'OsnovaPro', fontSize: 13 }}>{ride.desc}</Text>
+          ) : null}
         </View>
-        <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
-          <Text>IDR. </Text>
-          <Text>{ride.cost}</Text>
+        <View style={{ flexDirection: 'row', alignItems: 'flex-start', flex: 1 }}>
+          <Text style={{ fontSize: 12, color: colors.silver }}>IDR. </Text>
+          <Text style={{ fontFamily: 'OsnovaPro', fontSize: 16 }}>{ride.cost}</Text>
         </View>
-      </View>
+      </TouchableOpacity>
     )
   };
 
   renderFinance = () => {
-    
+    return (
+      <View style={{ flexDirection: 'row' }}>
+        <View style={{ flexDirection: 'row' }}>
+          <Text style={{ backgroundColor: colors.white }}>Cash</Text>
+        </View>
+      </View>
+    )
   }
 
   renderMap = () => {

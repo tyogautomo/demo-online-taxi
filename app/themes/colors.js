@@ -5,7 +5,8 @@ const colors = {
   greenHaze: '#00B140',
   chestnutRose: '#c95555',
   danube: '#579ac9',
-  skyBlue: '#64c4ed'
+  skyBlue: '#64c4ed',
+  hintGreen: '#f5fff8'
 }
 
 export { colors };

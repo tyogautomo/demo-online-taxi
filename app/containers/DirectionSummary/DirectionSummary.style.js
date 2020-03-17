@@ -20,7 +20,18 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 25,
     elevation: 8,
     padding: 20
-  }
+  },
+  rideItem: (type, rideName) => ({
+    paddingHorizontal: 10,
+    paddingVertical: 15,
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderRadius: 7,
+    borderWidth: 1,
+    marginBottom: 8,
+    borderColor:  type === rideName ? colors.greenHaze : 'transparent',
+    backgroundColor: type === rideName ? colors.hintGreen : 'transparent'
+  })
 });
 
 export { styles };
