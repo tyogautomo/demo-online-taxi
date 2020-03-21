@@ -10,6 +10,7 @@ import {
 import IconMaterial from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconAnt from 'react-native-vector-icons/AntDesign';
 import IconEntypo from 'react-native-vector-icons/Entypo';
+import IconAwesome from 'react-native-vector-icons/FontAwesome';
 
 import { styles } from './Home.style';
 import { colors } from '../../themes/colors';
@@ -91,13 +92,17 @@ class Home extends Component {
     return (
       <View style={{ flexDirection: 'row' }}>
         <View style={{ flex: 1, height: 50, backgroundColor: 'white', flexDirection: 'row', alignItems: 'center', paddingHorizontal: 20 }}>
-          <View style={{ width: 25, height: 25, backgroundColor: 'white', borderRadius: 25, borderWidth: 2, borderColor: colors.silver, marginRight: 10 }} />
-          <Text style={{ fontFamily: 'OsnovaPro' }}>IDR. 99.999.999</Text>
+          <View style={styles.moneyBalanceIconContainer}>
+              <IconAwesome name="gratipay" color={colors.gigas} size={15} />
+          </View>
+          <Text style={{ fontFamily: 'OsnovaProBold' }}>IDR. </Text><Text style={{ fontFamily: 'OsnovaPro' }}>6.174.867</Text>
         </View>
         <View style={{ width: 2 }} />
         <View style={{ flex: 1, height: 50, backgroundColor: 'white', flexDirection: 'row', alignItems: 'center', paddingHorizontal: 20 }}>
-          <View style={{ width: 25, height: 25, backgroundColor: 'white', borderRadius: 25, borderWidth: 2, borderColor: colors.silver, marginRight: 10 }} />
-          <Text style={{ fontFamily: 'OsnovaPro' }}>476 Points</Text>
+          <View style={styles.moneyBalanceIconContainer} >
+              <IconMaterial name="star-four-points" size={12} color={colors.gigas} />
+          </View>
+          <Text style={{ fontFamily: 'OsnovaPro' }}>476 </Text><Text style={{ fontFamily: 'OsnovaProBold' }}>Points</Text>
         </View>
       </View>
     );
@@ -113,7 +118,9 @@ class Home extends Component {
             <ImageBackground style={styles.menuItem(data.length, index)}>
               {index === data.length - 1 ? (
                 <IconEntypo name="dots-three-horizontal" size={24} />
-              ) : null}
+              ) : (
+                  <IconMaterial name="food" size={29} color={colors.white} />
+                )}
             </ImageBackground>
           </TouchableOpacity>
         ))}
@@ -123,11 +130,16 @@ class Home extends Component {
 
   renderTopUp = () => {
     return (
-      <View style={{ alignItems: 'center', backgroundColor: colors.white, marginTop: 6, paddingVertical: 20 }}>
+      <View style={{ justifyContent: 'space-around', backgroundColor: colors.white, marginTop: 6, paddingVertical: 20, flexDirection: 'row' }}>
         <TouchableOpacity activeOpacity={0.8} style={{ flexDirection: 'row', height: 40, backgroundColor: colors.white, elevation: 2, borderRadius: 5, paddingVertical: 10, paddingHorizontal: 15, justifyContent: 'center', alignItems: 'center' }}>
           <IconAnt name="wallet" size={20} color={colors.greenHaze} style={{ marginRight: 10 }} />
           <Text style={{ textAlign: 'center', fontFamily: 'OsnovaProBold' }}>Top Up •</Text>
           <Text style={{ textAlign: 'center', fontFamily: 'OsnovaPro' }}> Wallet</Text>
+        </TouchableOpacity>
+        <TouchableOpacity activeOpacity={0.8} style={{ flexDirection: 'row', height: 40, backgroundColor: colors.white, elevation: 2, borderRadius: 5, paddingVertical: 10, paddingHorizontal: 15, justifyContent: 'center', alignItems: 'center' }}>
+          <IconAnt name="car" size={20} color={colors.greenHaze} style={{ marginRight: 10 }} />
+          <Text style={{ textAlign: 'center', fontFamily: 'OsnovaProBold' }}>Ride to •</Text>
+          <Text style={{ textAlign: 'center', fontFamily: 'OsnovaPro' }}> Home</Text>
         </TouchableOpacity>
       </View>
     );

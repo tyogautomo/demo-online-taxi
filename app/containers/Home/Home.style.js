@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   menuItem: (length, index) => ({
     width: DEVICE_WIDTH / 6,
     height: DEVICE_WIDTH / 6,
-    backgroundColor: index === length - 1 ? colors.silver : colors.greenHaze,
+    backgroundColor: index === length - 1 ? colors.silver2 : colors.greenHaze,
     borderRadius: (DEVICE_WIDTH / 6) / 2,
     marginHorizontal: DEVICE_WIDTH * 0.01,
     justifyContent: 'center',
@@ -81,6 +81,17 @@ const styles = StyleSheet.create({
   promoImageStyle: {
     borderTopRightRadius: 10,
     borderTopLeftRadius: 10
+  },
+  moneyBalanceIconContainer: {
+    width: 25,
+    height: 25,
+    backgroundColor: 'white',
+    borderRadius: 25,
+    borderWidth: 2,
+    borderColor: colors.silver,
+    marginRight: 10,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 });
 
