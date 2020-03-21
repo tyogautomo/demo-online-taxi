@@ -29,7 +29,7 @@ class DirectionSummary extends Component {
     type: 'TaxiBike'
   };
 
-  async componentDidMount() {
+  componentDidMount() {
     this.animatingRoutes(0);
   };
 
@@ -58,16 +58,14 @@ class DirectionSummary extends Component {
   mapFitMarker = () => {
     const { directionRoutes } = this.props;
 
-    setTimeout(() => {
-      this.mapRef.fitToCoordinates(directionRoutes, {
-        edgePadding: {
-          top: 130,
-          bottom: 40,
-          left: 40,
-          right: 40
-        }
-      });
-    }, 800);
+    this.mapRef.fitToCoordinates(directionRoutes, {
+      edgePadding: {
+        top: 130,
+        bottom: 40,
+        left: 40,
+        right: 40
+      }
+    });
   };
 
   renderBackButton = () => {
@@ -78,7 +76,7 @@ class DirectionSummary extends Component {
         </TouchableOpacity>
       </View>
     )
-  }
+  };
 
   renderOriginMarker = () => {
     const { originPoint: { geometry: { location } } } = this.props;
@@ -106,7 +104,7 @@ class DirectionSummary extends Component {
         identifier='destination'
       />
     );
-  }
+  };
 
   renderRoutes = () => {
     const { animatedRoutes } = this.state

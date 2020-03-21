@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.silver,
     borderColor: colors.silver
   },
-  bringMeContainer: (isLoading) => ({
+  bringMeContainer: (isLoadingDestination, isLoadingDirection) => ({
     backgroundColor: colors.white,
     top: -35,
     zIndex: 2,
@@ -78,7 +78,8 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     elevation: 2,
     borderRadius: 5,
-    opacity: isLoading ? 0.4 : 1
+    opacity: isLoadingDestination ? 0.4 :
+      isLoadingDirection ? 0.4 : 1
   })
 });
 

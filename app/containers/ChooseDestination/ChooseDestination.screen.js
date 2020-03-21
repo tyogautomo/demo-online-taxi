@@ -170,11 +170,12 @@ class ChooseDestination extends Component {
 
   renderChoosePin = () => {
     const { topPin, scaleX } = this.state;
-    const { isRequestDestinationPoint } = this.props;
+    const { isRequestDestinationPoint, isRequestDirectionRoutes } = this.props;
+    console.log(isRequestDirectionRoutes)
     return (
       <View style={styles.originPinContainer}>
-        <TouchableOpacity activeOpacity={0.8} style={styles.bringMeContainer(isRequestDestinationPoint)} onPress={this.onPressBringMe} disabled={isRequestDestinationPoint}>
-          <Text style={{ fontFamily: 'OsnovaPro' }}>{isRequestDestinationPoint ? 'Loading..' : 'Bring Me Here'}</Text>
+        <TouchableOpacity activeOpacity={0.8} style={styles.bringMeContainer(isRequestDestinationPoint, isRequestDirectionRoutes)} onPress={this.onPressBringMe} disabled={isRequestDestinationPoint || isRequestDirectionRoutes}>
+          <Text style={{ fontFamily: 'OsnovaPro' }}>{isRequestDestinationPoint ? 'Loading..' :  isRequestDirectionRoutes ? 'Here we go!..' : 'Bring Me Here'}</Text>
         </TouchableOpacity>
         <View style={{ alignItems: 'center', bottom: 28 }}>
           <Animated.Image source={pin} style={{ width: 25, height: 25, top: topPin }} />

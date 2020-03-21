@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, Image, Animated } from 'react-native';
+import { View, Text, TouchableOpacity, Image, Animated, BackHandler } from 'react-native';
 import MapView from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
 import IconAwesome from 'react-native-vector-icons/FontAwesome';
@@ -17,12 +17,32 @@ class ChooseOrigin extends Component {
     bookNow: true,
     topPin: new Animated.Value(3),
     scaleX: new Animated.Value(2),
+    bottomSummary: new Animated.Value(-200),
     isDragged: false
   };
 
   componentDidMount() {
+    this.onFocus();
+    this.onBlur();
+    this.backHandler();
     this.getCurrentLocation();
+    this.animateSummaryContainer();
   };
+
+  onBlur = () => {
+    const { navigation } = this.props;
+    navigation.addListener('blur', () => {
+      this.setState({ bottomSummary: new Animated.Value(-200) });
+    })
+  };
+
+  onFocus = () => {
+    const { navigation } = this.props;
+    navigation.addListener('focus', () => {
+      this.backHandler();
+      this.animateSummaryContainer();
+    })
+  }
 
   onPressTime = (status) => {
     if (status === 'now') {
@@ -91,6 +111,37 @@ class ChooseOrigin extends Component {
     navigation.navigate('ChooseDestination');
   };
 
+  backHandler = () => {
+    const { navigation } = this.props;
+    const { bottomSummary } = this.state;
+    BackHandler.addEventListener('hardwareBackPress', () => {
+      Animated.timing(
+        bottomSummary,
+        {
+          toValue: -200,
+          duration: 100
+        }
+      ).start(() => {
+        navigation.goBack();
+      })
+      return true;
+    });
+  };
+
+  animateSummaryContainer = () => {
+    const { bottomSummary } = this.state;
+
+    setTimeout(() => {
+      Animated.timing(
+        bottomSummary,
+        {
+          toValue: 0,
+          duration: 150
+        }
+      ).start();
+    }, 200);
+  };
+
   getCurrentLocation = () => {
     Geolocation.getCurrentPosition(
       this.onSuccessLocation,
@@ -100,14 +151,14 @@ class ChooseOrigin extends Component {
   };
 
   renderDirectionSummary = () => {
-    const { bookNow, isDragged } = this.state;
+    const { bookNow, isDragged, bottomSummary } = this.state;
     const {
       originPoint: { formatted_address },
       isRequestLocation
     } = this.props;
 
     return (
-      <View style={styles.summaryContainer}>
+      <Animated.View style={{ ...styles.summaryContainer, bottom: bottomSummary }}>
         <View style={styles.timeContainer}>
           <Text style={styles.textNow(bookNow)} onPress={() => this.onPressTime('now')}>Now</Text>
           <Text style={styles.textLater(bookNow)} onPress={() => this.onPressTime('later')}>Later</Text>
@@ -138,7 +189,7 @@ class ChooseOrigin extends Component {
             </TouchableOpacity>
           </View>
         </View>
-      </View>
+      </Animated.View>
     );
   };
 

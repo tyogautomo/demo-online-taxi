@@ -6,7 +6,8 @@ import { requestDestinationPoint, requestDirectionRoute } from '../../redux/map/
 const mapStateToProps = state => ({
   originPoint: state.mapReducer.originPoint,
   destinationPoint: state.mapReducer.destinationPoint,
-  isRequestDestinationPoint: state.mapReducer.isRequestDestinationPoint
+  isRequestDestinationPoint: state.mapReducer.isRequestDestinationPoint,
+  isRequestDirectionRoutes: state.mapReducer.isRequestDirectionRoutes
 });
 const mapDispatchToProps = dispatch => ({
   requestDestinationPoint: point => dispatch(requestDestinationPoint(point)),
