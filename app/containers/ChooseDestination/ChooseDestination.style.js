@@ -70,15 +70,16 @@ const styles = StyleSheet.create({
     backgroundColor: colors.silver,
     borderColor: colors.silver
   },
-  bringMeContainer: {
+  bringMeContainer: (isLoading) => ({
     backgroundColor: colors.white,
     top: -35,
     zIndex: 2,
     paddingHorizontal: 10,
     paddingVertical: 5,
     elevation: 2,
-    borderRadius: 5
-  }
+    borderRadius: 5,
+    opacity: isLoading ? 0.4 : 1
+  })
 });
 
 export { styles };

@@ -1,14 +1,16 @@
 import { connect } from 'react-redux';
 
 import { ChooseDestination } from './ChooseDestination.screen'
-import { requestDestinationPoint } from '../../redux/map/mapAction';
+import { requestDestinationPoint, requestDirectionRoute } from '../../redux/map/mapAction';
 
 const mapStateToProps = state => ({
   originPoint: state.mapReducer.originPoint,
-  destinationPoint: state.mapReducer.destinationPoint
+  destinationPoint: state.mapReducer.destinationPoint,
+  isRequestDestinationPoint: state.mapReducer.isRequestDestinationPoint
 });
 const mapDispatchToProps = dispatch => ({
-  requestDestinationPoint: point => dispatch(requestDestinationPoint(point))
+  requestDestinationPoint: point => dispatch(requestDestinationPoint(point)),
+  requestDirectionRoute: (direction) => dispatch(requestDirectionRoute(direction))
 });
 
 export default connect(

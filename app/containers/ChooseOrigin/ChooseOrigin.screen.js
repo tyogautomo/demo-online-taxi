@@ -101,7 +101,10 @@ class ChooseOrigin extends Component {
 
   renderDirectionSummary = () => {
     const { bookNow, isDragged } = this.state;
-    const { originPoint: { formatted_address } } = this.props;
+    const {
+      originPoint: { formatted_address },
+      isRequestLocation
+    } = this.props;
 
     return (
       <View style={styles.summaryContainer}>
@@ -130,7 +133,7 @@ class ChooseOrigin extends Component {
               </TextTicker>
             </View>
             <View style={styles.separatorDirection} />
-            <TouchableOpacity onPress={this.onPressDestination}>
+            <TouchableOpacity onPress={this.onPressDestination} disabled={isRequestLocation}>
               <Text style={{ color: colors.silver, fontFamily: 'OsnovaProBold', fontSize: 18 }}>I'm going to..</Text>
             </TouchableOpacity>
           </View>
@@ -153,11 +156,31 @@ class ChooseOrigin extends Component {
 
   renderMaps = () => {
     const { bottomMargin, currentLocation } = this.state;
+    const customStyle = [
+      {
+        "featureType": "poi.business",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      },
+      {
+        "featureType": "poi.park",
+        "elementType": "labels.text",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      }
+    ]
 
     return (
       <View>
         <MapView
           style={{ ...styles.mapContainer, marginBottom: bottomMargin }}
+          customMapStyle={customStyle}
           onMapReady={() => this.setState({ bottomMargin: 0 })}
           onRegionChangeComplete={this.onRegionChangeComplete}
           onTouchStart={this.onTouchStart}

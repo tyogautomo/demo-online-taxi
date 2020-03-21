@@ -44,24 +44,28 @@ const requestDestinationPoint = ({ latitude, longitude }) => async dispatch => {
   }
 };
 
-const requestDirectionRoute = ({ origin, destination }) => async dispatch => {
-  try {
-    dispatch({ type: REQUEST_DIRECTION_ROUTE });
-    const { data } = await axios({
-      url: `https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=${API_KEY}`
-    });
-    const decode = polyline.decode(data.routes[0].overview_polyline.points);
-    const formatted = decode.map(coord => ({
-      latitude: coord[0],
-      longitude: coord[1]
-    }));
-    dispatch({
-      type: REQUEST_DIRECTION_ROUTE_SUCCESS,
-      payload: formatted
-    })
-  } catch (error) {
-    dispatch({ type: REQUEST_DIRECTION_ROUTE_FAILED })
-  }
+const requestDirectionRoute = ({ origin, destination }) => dispatch => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      dispatch({ type: REQUEST_DIRECTION_ROUTE });
+      const { data } = await axios({
+        url: `https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=${API_KEY}`
+      });
+      const decode = polyline.decode(data.routes[0].overview_polyline.points);
+      const formatted = decode.map(coord => ({
+        latitude: coord[0],
+        longitude: coord[1]
+      }));
+      dispatch({
+        type: REQUEST_DIRECTION_ROUTE_SUCCESS,
+        payload: formatted
+      })
+      resolve(formatted)
+    } catch (error) {
+      dispatch({ type: REQUEST_DIRECTION_ROUTE_FAILED })
+      reject(error)
+    }
+  })
 }
 
 export {

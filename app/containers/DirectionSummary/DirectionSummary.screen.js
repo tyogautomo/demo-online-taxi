@@ -29,9 +29,8 @@ class DirectionSummary extends Component {
     type: 'TaxiBike'
   };
 
-  componentDidMount() {
-    this.mapFitMarker();
-    this.getRoute();
+  async componentDidMount() {
+    this.animatingRoutes(0);
   };
 
   onPressItem = (type) => {
@@ -42,25 +41,6 @@ class DirectionSummary extends Component {
     const { navigation } = this.props;
     navigation.goBack();
   }
-
-  getRoute = async () => {
-    const {
-      requestDirectionRoute,
-      originPoint: {
-        geometry: { location: originLoc }
-      },
-      destinationPoint: {
-        geometry: { location: destinationLoc }
-      }
-    } = this.props;
-
-    const payload = {
-      origin: `${originLoc.lat},${originLoc.lng}`,
-      destination: `${destinationLoc.lat},${destinationLoc.lng}`
-    }
-    await requestDirectionRoute(payload);
-    this.animatingRoutes(0);
-  };
 
   animatingRoutes = (i) => {
     const { directionRoutes } = this.props;
@@ -76,13 +56,15 @@ class DirectionSummary extends Component {
   };
 
   mapFitMarker = () => {
+    const { directionRoutes } = this.props;
+
     setTimeout(() => {
-      this.mapRef.fitToSuppliedMarkers(['origin', 'destination'], {
+      this.mapRef.fitToCoordinates(directionRoutes, {
         edgePadding: {
           top: 130,
-          bottom: 80,
-          left: 80,
-          right: 80
+          bottom: 40,
+          left: 40,
+          right: 40
         }
       });
     }, 800);
@@ -249,6 +231,7 @@ class DirectionSummary extends Component {
           customMapStyle={customStyle}
           style={{ ...styles.mapContainer, marginBottom: bottomMargin }}
           onMapReady={() => this.setState({ bottomMargin: 0 })}
+          onLayout={() => this.mapFitMarker()}
           camera={{
             center: {
               latitude: location.lat,

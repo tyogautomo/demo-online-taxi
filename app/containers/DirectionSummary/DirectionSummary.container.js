@@ -8,11 +8,7 @@ const mapStateToProps = state => ({
   destinationPoint: state.mapReducer.destinationPoint,
   directionRoutes: state.mapReducer.directionRoutes
 });
-const mapDispatchToProps = dispatch => ({
-  requestDirectionRoute: (direction) => dispatch(requestDirectionRoute(direction))
-});
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(DirectionSummary);

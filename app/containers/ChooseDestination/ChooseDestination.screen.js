@@ -77,8 +77,23 @@ class ChooseDestination extends Component {
     });
   };
 
-  onPressBringMe = () => {
-    const { navigation } = this.props;
+  onPressBringMe = async () => {
+    const {
+      navigation,
+      requestDirectionRoute,
+      originPoint: {
+        geometry: { location: originLoc }
+      },
+      destinationPoint: {
+        geometry: { location: destinationLoc }
+      }
+    } = this.props;
+
+    const payload = {
+      origin: `${originLoc.lat},${originLoc.lng}`,
+      destination: `${destinationLoc.lat},${destinationLoc.lng}`
+    }
+    await requestDirectionRoute(payload);
     navigation.navigate('DirectionSummary');
   };
 
@@ -155,10 +170,11 @@ class ChooseDestination extends Component {
 
   renderChoosePin = () => {
     const { topPin, scaleX } = this.state;
+    const { isRequestDestinationPoint } = this.props;
     return (
       <View style={styles.originPinContainer}>
-        <TouchableOpacity activeOpacity={0.8} style={styles.bringMeContainer} onPress={this.onPressBringMe}>
-          <Text style={{ fontFamily: 'OsnovaPro' }}>Bring Me Here</Text>
+        <TouchableOpacity activeOpacity={0.8} style={styles.bringMeContainer(isRequestDestinationPoint)} onPress={this.onPressBringMe} disabled={isRequestDestinationPoint}>
+          <Text style={{ fontFamily: 'OsnovaPro' }}>{isRequestDestinationPoint ? 'Loading..' : 'Bring Me Here'}</Text>
         </TouchableOpacity>
         <View style={{ alignItems: 'center', bottom: 28 }}>
           <Animated.Image source={pin} style={{ width: 25, height: 25, top: topPin }} />
